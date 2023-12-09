@@ -1,0 +1,11 @@
+.sidenav-container {
+  margin-top: -20px;
+  height: 100%;
+}
+
+.sidenav {
+    height: 100%;
+}
+main {
+    height: 100%;
+}

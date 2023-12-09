@@ -1,0 +1,45 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav class="sidenav" mode="side" [opened]="sidenavOpended">
+    <app-sidenav></app-sidenav>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <app-toolbar (toggleSidenav)="onToggleSidenav()"></app-toolbar>
+      <mat-card>
+        <mat-card-content>
+          <div class="main-content">
+            <mat-card>
+              <mat-card-content>
+                <mat-card-title>{{ assignementTransmis?.nom }}</mat-card-title>
+                <mat-card-subtitle>{{ assignementTransmis?.dateRendu | date }}</mat-card-subtitle>
+                <mat-checkbox class="example-margin" *ngIf="!assignementTransmis?.rendu" (click)="assignementRendu()">
+                  Devoir rendu
+                </mat-checkbox>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <nav>
+
+                    <button mat-stroked-button color="primary" (click)="onClickEdit()" [disabled]="!isAdmin()">Éditer
+                    </button>
+
+                  </nav>
+                  <button mat-raised-button color="warn" [disabled]="!isAdmin()" (click)="onDeleteAssignment()">
+                    Supprimer le devoir
+                  </button>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </mat-card-content>
+      </mat-card>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+
+
+
+
+
+
+
+
+

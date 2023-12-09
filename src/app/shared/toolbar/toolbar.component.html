@@ -1,0 +1,23 @@
+<mat-toolbar color="primary" style="display: flex; align-items: center; justify-content: space-between;">
+  <div style="display: flex; align-items: center;">
+    <button mat-icon-button (click)="onToggleSidenav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-icon>house</mat-icon>
+  </div>
+
+  <div>
+    <p *ngIf="isAdmin; else admin">Vous êtes connectés en tant qu'admin {{identifiant}}</p>
+    <ng-template #admin>
+      <p *ngIf="isLogged && !isAdmin">Vous êtes connectés en tant que non admin {{identifiant}}</p>
+    </ng-template>
+    <p *ngIf="!isLogged && !isAdmin">Vous êtes connectés en tant qu'invité</p>
+  </div>
+
+  <button *ngIf="!isLogged && !isAdmin" mat-stroked-button (click)="reloadApp()" color="primary" style="text-decoration: none; color: beige;">
+    Se connecter
+  </button>
+  <button *ngIf="isLogged || isAdmin" mat-stroked-button (click)="reloadApp()" color="primary" style="text-decoration: none; color: beige;">
+    Se déconnecter
+  </button>
+</mat-toolbar>

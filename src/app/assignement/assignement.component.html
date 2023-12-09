@@ -1,0 +1,43 @@
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #sidenav class="sidenav" mode="side" [opened]="sidenavOpended">
+      <app-sidenav></app-sidenav>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <app-toolbar (toggleSidenav)="onToggleSidenav()"></app-toolbar>
+      <mat-card>
+        <mat-card-content>
+          <div class="main-content">
+            <mat-list *ngFor="let a of assignements">
+              <a routerLink="/assignement/{{a.id}}">
+                <h3 mat-subheader>{{a.dateRendu | date}}</h3>
+                <mat-list-item (click)="assignmentClique(a)">
+                  <p *ngIf="a.rendu; else nonRendu" appRendu>Le devoir {{a.nom}} est rendu à cette date {{a.dateRendu}}
+                    avec une
+                    note
+                    de {{a.note}}</p>
+                  <ng-template #nonRendu>
+                    <p>Le devoir {{a.nom}} n'est pas rendu avec une note de {{a.note}}</p>
+                  </ng-template>
+                  <mat-divider></mat-divider>
+                </mat-list-item>
+              </a>
+
+            </mat-list>
+            <!--   <app-assignment-detail *ngIf="detailVisible" [(detailVisible)]="detailVisible"
+                                      [assignementTransmis]="assignementSelectionne"
+                                      (onDelete)="deleteAssignment($event)"></app-assignment-detail>-->
+
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+<!--
+<app-assignment-add *ngIf="formVisible" (newAssignement)="onNewAssignement($event)"></app-assignment-add>
+-->
+
+
+
+

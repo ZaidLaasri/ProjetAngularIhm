@@ -3,12 +3,15 @@ import {resolve} from "@angular/compiler-cli";
 import {user} from "./users.model";
 import {AssignmentLoggingComponent} from "../assignement/assignment-logging/assignment-logging.component";
 import {Router} from "@angular/router";
+import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
+  url = "http://localhost:8010/api/users";
 
   user: user = {
     login: 'Zaid',
@@ -20,6 +23,12 @@ export class AuthService {
     this.loggedIn = true;
     return true;
   }
+
+  login(nomUtilisateur: string, password: string): Observable<any> {
+    return this.http.post(this.url, { nomUtilisateur, password });
+  }
+
+
 
     reset(){
     this.Admin=false;
@@ -63,6 +72,6 @@ export class AuthService {
     return isUserAdmin;
   }
 
-  constructor(private router:Router) {
+  constructor(private router:Router, private http: HttpClient) {
   }
 }

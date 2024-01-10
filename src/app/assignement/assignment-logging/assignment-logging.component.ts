@@ -35,16 +35,19 @@ export class AssignmentLoggingComponent implements OnInit {
   login() {
     this.authService.login(this.identifiant, this.password).subscribe(
       connection => {
-      console.log(connection)
+        console.log(connection);
+
+        // Stocker l'état de la session dans le LocalStorage ou SessionStorage
+        localStorage.setItem('userSession', JSON.stringify(connection));
+
         this.router.navigate(['/home']);
       },
       error => {
-        console.log(error); // Affiche l'objet d'erreur complet
-
-        // Extraction du message d'erreur personnalisé
+        console.log(error);
         const errorMessage = error.error.error || 'Erreur inconnue';
         alert('Erreur lors de la connexion : ' + errorMessage);
       }
     );
   }
+
 }

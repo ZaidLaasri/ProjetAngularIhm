@@ -9,25 +9,34 @@
           <div class="main-content">
             <mat-card>
               <mat-card-content>
-                <mat-card-title>{{ assignementTransmis?.nom }}</mat-card-title>
-                <mat-card-subtitle>{{ assignementTransmis?.dateRendu | date }}</mat-card-subtitle>
-                <mat-checkbox class="example-margin" *ngIf="!assignementTransmis?.rendu" (click)="assignementRendu()">
-                  Devoir rendu
-                </mat-checkbox>
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                  <nav>
+                <div class="columns-container">
+                  <div class="assignment-column">
+                    <mat-card-title>{{ assignementTransmis?.nom }}</mat-card-title>
+                    <mat-card-subtitle>{{ assignementTransmis?.dateRendu | date }}</mat-card-subtitle>
+                    <p><b>Note :</b> {{ assignementTransmis?.note }}</p>
 
-                    <button mat-stroked-button color="primary" (click)="onClickEdit()" [disabled]="!isAdmin()">Éditer
-                    </button>
+                    <mat-checkbox class="example-margin" *ngIf="!assignementTransmis?.rendu && assignementTransmis?.note" (click)="assignementRendu()">
+                      Devoir rendu
+                    </mat-checkbox>
 
-                  </nav>
-                  <button mat-raised-button color="warn" [disabled]="!isAdmin()" (click)="onDeleteAssignment()">
-                    Supprimer le devoir
-                  </button>
+                    <p>Matière: {{ assignementTransmis?.matiere?.nom }}</p>
+                    <img class="uniform-image" *ngIf="assignementTransmis?.matiere?.image" [src]="image" alt="Image de la matière" />
+                    <p>Étudiant: {{ assignementTransmis?.eleve?.nom }}</p>
+
+                    <button mat-stroked-button color="primary" class="edit-button" (click)="onClickEdit()" [disabled]="!isAdmin()">Éditer</button>
+                    <button mat-raised-button color="warn" class="delete-button" [disabled]="!isAdmin()" (click)="onDeleteAssignment()">Supprimer le devoir</button>
+                  </div>
+
+                  <div class="professor-column">
+                    <p>Sous la direction du professeur: {{ assignementTransmis?.matiere?.professeur }}</p>
+                    <img class="uniform-image prof" *ngIf="assignementTransmis?.matiere?.photoProfesseur" [src]="photoProfesseur" alt="photo du professeur" />
+                  </div>
                 </div>
               </mat-card-content>
             </mat-card>
           </div>
+
+
         </mat-card-content>
       </mat-card>
   </mat-sidenav-content>

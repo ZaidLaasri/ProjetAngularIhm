@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AssignmentsService} from "../../shared/assignments.service";
-import {Assignment} from "../assignement.model";
+import {Assignment} from "../../shared/models/assignement.model";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../../shared/auth.service";
 
@@ -30,6 +30,8 @@ export class EditAssignmentComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAssignment();
+
+
     console.log(this.assignementTransmis);
     console.log(this.detailVisible);
 
@@ -62,18 +64,44 @@ export class EditAssignmentComponent implements OnInit {
 
   }
 
-  onSaveAssignment() {
+  onSaveAssignment(event: { preventDefault: () => void; }) {
+    event.preventDefault();
     if (!this.assignementTransmis) return;
 
-    this.assignementTransmis.nom = this.nomDevoir;
-    this.assignementTransmis.dateRendu = this.dateDevoir;
-    this.assignmentsService.updateAssignments(this.assignementTransmis).subscribe(message => console.log(message))
-    this.router.navigate(['/home'])
+    // Créer un nouvel objet avec la structure attendue par le serveur
+    let updatedAssignment: any = {
+      ...this.assignementTransmis,
+      nom: this.nomDevoir,
+      dateRendu: new Date(this.dateDevoir),
+      note: parseInt(this.noteDevoir),
+      rendu: this.renduDevoir,
+    };
+
+    // Vérifier si 'matiere' est un objet et a une propriété 'id'
+    if (typeof this.assignementTransmis.matiere === 'object' && this.assignementTransmis.matiere?.id) {
+      updatedAssignment.matiere = this.assignementTransmis.matiere.id;
+    }
+
+    // De même pour 'eleve'
+    if (typeof this.assignementTransmis.eleve === 'object' && this.assignementTransmis.eleve?.id) {
+      updatedAssignment.eleve = this.assignementTransmis.eleve.id;
+    }
+
+    this.assignmentsService.updateAssignments(updatedAssignment).subscribe(message => {
+      console.log(message);
+      this.router.navigate(['/home']);
+    });
   }
 
   getAssignment() {
     const id = +this.route.snapshot.params['id'];
-    this.assignmentsService.getAssignment(id).subscribe(assignment => this.assignementTransmis = assignment);
-    this.nomDevoir = this.assignementTransmis?.nom
+    this.assignmentsService.getAssignment(id).subscribe(assignment => {
+      this.assignementTransmis = assignment;
+      // Assurez-vous que ces assignations se font après la réception de l'assignment
+      this.nomDevoir = this.assignementTransmis?.nom;
+      this.dateDevoir = this.assignementTransmis?.dateRendu; // Convertissez en objet Date si nécessaire
+      this.noteDevoir = this.assignementTransmis?.note;
+      this.renduDevoir = this.assignementTransmis?.rendu;
+    });
   }
 }

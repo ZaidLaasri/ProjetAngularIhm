@@ -9,3 +9,44 @@
 main {
     height: 100%;
 }
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+
+.info-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.columns-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.assignment-column, .professor-column {
+  flex: 1;
+  padding: 10px; /* Adjust padding as needed */
+}
+
+.prof{
+  border-radius: 50px;
+
+}
+.uniform-image {
+  width: 150px; /* Adjust as needed */
+  height: auto;
+}
+.edit-button {
+  margin-right: 10px; /* Adjust the space as needed */
+}

@@ -7,25 +7,48 @@
       <mat-card>
         <mat-card-content>
           <div class="main-content">
-            <mat-list *ngFor="let a of assignements">
-              <a routerLink="/assignement/{{a.id}}">
-                <h3 mat-subheader>{{a.dateRendu | date}}</h3>
-                <mat-list-item (click)="assignmentClique(a)">
-                  <p *ngIf="a.rendu; else nonRendu" appRendu>Le devoir {{a.nom}} est rendu à cette date {{a.dateRendu}}
-                    avec une
-                    note
-                    de {{a.note}}</p>
-                  <ng-template #nonRendu>
-                    <p>Le devoir {{a.nom}} n'est pas rendu avec une note de {{a.note}}</p>
-                  </ng-template>
-                  <mat-divider></mat-divider>
-                </mat-list-item>
-              </a>
+            <mat-checkbox (change)="applyFilter($event)">Afficher uniquement les devoirs rendus</mat-checkbox>
+            <input matInput (keyup)="applySearch($event)" placeholder="Recherche par nom">
 
-            </mat-list>
-            <!--   <app-assignment-detail *ngIf="detailVisible" [(detailVisible)]="detailVisible"
-                                      [assignementTransmis]="assignementSelectionne"
-                                      (onDelete)="deleteAssignment($event)"></app-assignment-detail>-->
+            <mat-table *ngIf="dataSource"
+              [dataSource]="dataSource">
+              <!-- Définissez des colonnes ici, par exemple: -->
+              <ng-container matColumnDef="nom">
+                <mat-header-cell *matHeaderCellDef> Nom </mat-header-cell>
+                <mat-cell *matCellDef="let element"> <a routerLink="/assignement/{{element.id}}">{{element.nom}} </a></mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="dateRendu">
+                <mat-header-cell *matHeaderCellDef> Date de rendu </mat-header-cell>
+                <mat-cell *matCellDef="let element"> <a routerLink="/assignement/{{element.id}}">{{element.dateRendu | date: 'dd/MM/yyyy'}}</a> </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="rendu">
+                <mat-header-cell *matHeaderCellDef> Rendu </mat-header-cell>
+                <mat-cell *matCellDef="let element"> <a routerLink="/assignement/{{element.id}}"> </a> <mat-icon *ngIf="element.rendu">check</mat-icon>
+                  <mat-icon *ngIf="!element.rendu">close</mat-icon>
+                </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="note">
+                <mat-header-cell *matHeaderCellDef> Note </mat-header-cell>
+                <mat-cell *matCellDef="let element" ><ng-container *ngIf="element.rendu" ><a routerLink="/assignement/{{element.id}}"> {{element.note}}</a> </ng-container></mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="matiere">
+                <mat-header-cell *matHeaderCellDef> Matière </mat-header-cell>
+                <mat-cell *matCellDef="let element"> <a routerLink="/assignement/{{element.id}}">{{element.matiere.nom}}</a> </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="eleve">
+                <mat-header-cell *matHeaderCellDef> Elève </mat-header-cell>
+                <mat-cell *matCellDef="let element"><a routerLink="/assignement/{{element.id}}"> {{element.eleve.nom}}</a> </mat-cell>
+              </ng-container>
+
+              <!-- Autres colonnes... -->
+
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <ng-container *ngFor="let element of dataSource.data">
+                <mat-row *matRowDef="let row; columns: displayedColumns;" [appRendu]="element.rendu"></mat-row>
+              </ng-container>
+            </mat-table>
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" (page)="onPaginateChange($event)"></mat-paginator>
 
           </div>
         </mat-card-content>

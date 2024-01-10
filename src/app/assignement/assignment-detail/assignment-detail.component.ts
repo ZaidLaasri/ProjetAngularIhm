@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Assignment} from "../assignement.model";
+import {Assignment} from "../../shared/models/assignement.model";
 import {AssignmentsService} from "../../shared/assignments.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {query} from "@angular/animations";
@@ -17,28 +17,42 @@ export class AssignmentDetailComponent implements OnInit {
   @Output() detailVisibleChange = new EventEmitter<boolean>();
   @Input() detailVisible?: boolean;
   @Input() user?: user;
+   photoProfesseur?: string;
 
   constructor(private assignmentsService: AssignmentsService, private route: ActivatedRoute, private router: Router, private authService: AuthService) {
   }
 
+  image?: string;
   ngOnInit(): void {
     this.getAssignment();
     console.log(this.assignementTransmis);
     console.log(this.detailVisible);
-
   }
 
   assignementRendu(): void {
     if (this.assignementTransmis) {
-      this.assignementTransmis.rendu=true;
-      this.assignmentsService.updateAssignments(this.assignementTransmis).subscribe(message => {
-        console.log(message)
-        this.router.navigate(['/home'])
-      })
+      this.assignementTransmis.rendu = true;
 
+      let updatedAssignment: any = {
+        ...this.assignementTransmis
+      };
+
+      // Vérifier si 'matiere' est un objet et a une propriété 'id'
+      if (typeof this.assignementTransmis.matiere === 'object' && this.assignementTransmis.matiere?.id) {
+        updatedAssignment.matiere = this.assignementTransmis.matiere.id;
+      }
+
+      // De même pour 'eleve'
+      if (typeof this.assignementTransmis.eleve === 'object' && this.assignementTransmis.eleve?.id) {
+        updatedAssignment.eleve = this.assignementTransmis.eleve.id;
+      }
+
+      this.assignmentsService.updateAssignments(updatedAssignment).subscribe(message => {
+        console.log(message);
+        this.router.navigate([this.router.url]);
+      });
     }
   }
-
   onDeleteAssignment(): void {
     if (this.assignementTransmis) {
       this.detailVisible = false
@@ -52,8 +66,15 @@ export class AssignmentDetailComponent implements OnInit {
 
   getAssignment() {
     const id = +this.route.snapshot.params['id'];
-    this.assignmentsService.getAssignment(id).subscribe(assignment => this.assignementTransmis = assignment);
+    this.assignmentsService.getAssignment(id).subscribe(assignment => {
+      this.assignementTransmis = assignment;
+      if (assignment && assignment.matiere && assignment.matiere.image && assignment.matiere.photoProfesseur) {
+        this.image = "assets/matiere/" + assignment.matiere.image;
+        this.photoProfesseur = "assets/prof/" + assignment.matiere.photoProfesseur;
+      }
+    });
   }
+
 
   onClickEdit() {
     this.router.navigate(['/assignement', this.assignementTransmis?.id, 'edit'], {

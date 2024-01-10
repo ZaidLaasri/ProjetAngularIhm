@@ -9,7 +9,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {MatButtonModule} from "@angular/material/button";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import { AssignementComponent } from './assignement/assignement.component';
-import { RenduDirective } from './shared/rendu.directive';
+import { RenduDirective } from './shared/directive/rendu.directive';
 import { MatFormFieldModule} from "@angular/material/form-field";
 import {FormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
@@ -32,6 +32,8 @@ import {HttpClientModule} from "@angular/common/http";
 import { SidenavComponent } from './shared/sidenav/sidenav.component';
 import { ToolbarComponent } from './shared/toolbar/toolbar.component';
 import { IsAdminDirective } from './shared/directive/is-admin.directive';
+import {MatTableModule} from "@angular/material/table";
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 @NgModule({
   declarations: [
@@ -65,7 +67,7 @@ import { IsAdminDirective } from './shared/directive/is-admin.directive';
     MatIconModule,
     MatSidenavModule,
     MatListModule,
-    MatCardModule, HttpClientModule
+    MatCardModule, HttpClientModule, MatTableModule, MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

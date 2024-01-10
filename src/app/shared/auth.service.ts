@@ -4,7 +4,7 @@ import {user} from "./users.model";
 import {AssignmentLoggingComponent} from "../assignement/assignment-logging/assignment-logging.component";
 import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {catchError, map, Observable, tap, throwError} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +24,20 @@ export class AuthService {
     return true;
   }
 
+  Admin = false
+
   login(nomUtilisateur: string, password: string): Observable<any> {
-    return this.http.post(this.url, { nomUtilisateur, password });
+    return this.http.post<any>(this.url, { nomUtilisateur, password }).pipe(
+      tap(response => {
+        // Mettre à jour la variable admin avec la réponse
+        this.loggedIn = true;
+        this.Admin = response.admin;
+      }),
+      catchError(error => {
+        // Gérer l'erreur
+        return throwError(error);
+      })
+    );
   }
 
 
@@ -37,16 +49,10 @@ export class AuthService {
 
     }
   isAdmin(login: string, password: string): boolean {
-    if (login === this.user.login && password === this.user.password) {
-      this.Admin = true;
-      return true;
-    } else {
-      return false
-    }
+   return this.Admin
   }
 
   loggedIn = false;
-  Admin = false
 
 
   logOut() {

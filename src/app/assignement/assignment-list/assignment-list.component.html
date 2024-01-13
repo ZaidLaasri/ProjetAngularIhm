@@ -1,6 +1,5 @@
 <div *ngFor="let a of assignements" [ngClass]="{'rendu':a.rendu, 'nonRendu':!a.rendu}">
-  <p *ngIf="a.rendu; else nonRendu" appRendu>Le devoir {{a.nom}} est rendu à cette date {{a.dateRendu}} avec une note
-    de {{a.note}}</p>
+
 
   <ng-template #nonRendu>
     <p>Le devoir {{a.nom}} n'est pas rendu avec une note de {{a.note}}</p>

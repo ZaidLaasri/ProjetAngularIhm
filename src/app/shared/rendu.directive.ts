@@ -1,5 +1,4 @@
-import { Directive, ElementRef, Input, OnChanges, SimpleChanges } from '@angular/core';
-
+import {Directive, ElementRef, Input, OnChanges, SimpleChanges} from '@angular/core';
 @Directive({
   selector: '[appRendu]'
 })
@@ -17,10 +16,11 @@ export class RenduDirective implements OnChanges {
   private updateStyle(rendu: boolean | undefined) {
     if (rendu) {
       this.el.nativeElement.style.color = "green";
-      this.el.nativeElement.style.border = "1px dashed green";
-      this.el.nativeElement.style.backgroundColor = "yellow";
+      this.el.nativeElement.style.border = "";
+      this.el.nativeElement.style.backgroundColor = "lightgreen";
+      this.el.nativeElement.style.margin = "5px";
+
     } else {
-      // Réinitialiser les styles si nécessaire
       this.el.nativeElement.style.color = null;
       this.el.nativeElement.style.border = null;
       this.el.nativeElement.style.backgroundColor = null;

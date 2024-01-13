@@ -9,7 +9,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {MatButtonModule} from "@angular/material/button";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import { AssignementComponent } from './assignement/assignement.component';
-import { RenduDirective } from './shared/directive/rendu.directive';
+import { RenduDirective } from './shared/rendu.directive';
 import { MatFormFieldModule} from "@angular/material/form-field";
 import {FormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
@@ -34,6 +34,7 @@ import { ToolbarComponent } from './shared/toolbar/toolbar.component';
 import { IsAdminDirective } from './shared/directive/is-admin.directive';
 import {MatTableModule} from "@angular/material/table";
 import {MatPaginatorModule} from "@angular/material/paginator";
+import { FormulaireMatiereComponent } from './assignement/component/formulaire-matiere/formulaire-matiere.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     AssignmentLoggingComponent,
     SidenavComponent,
     ToolbarComponent,
-    IsAdminDirective
+    IsAdminDirective,
+    FormulaireMatiereComponent
   ],
   imports: [
     BrowserModule,

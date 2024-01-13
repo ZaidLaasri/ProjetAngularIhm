@@ -43,9 +43,7 @@
               <!-- Autres colonnes... -->
 
               <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-              <ng-container *ngFor="let element of dataSource.data">
-                <mat-row *matRowDef="let row; columns: displayedColumns;" [appRendu]="element.rendu"></mat-row>
-              </ng-container>
+              <mat-row *matRowDef="let row; columns: displayedColumns;" [appRendu]="row.rendu"></mat-row>
             </mat-table>
 
             <mat-paginator [pageSizeOptions]="[5, 10, 20]" (page)="onPaginateChange($event)"></mat-paginator>

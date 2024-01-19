@@ -9,9 +9,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {MatButtonModule} from "@angular/material/button";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import { AssignementComponent } from './assignement/assignement.component';
-import { RenduDirective } from './shared/rendu.directive';
+import { RenduDirective } from './shared/directive/rendu.directive';
 import { MatFormFieldModule} from "@angular/material/form-field";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {MatDividerModule} from "@angular/material/divider";
 import {MatDatepickerModule} from "@angular/material/datepicker";
@@ -35,6 +35,10 @@ import { IsAdminDirective } from './shared/directive/is-admin.directive';
 import {MatTableModule} from "@angular/material/table";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import { FormulaireMatiereComponent } from './assignement/component/formulaire-matiere/formulaire-matiere.component';
+import {MatSelectModule} from "@angular/material/select";
+import {MatStepperModule} from "@angular/material/stepper";
+import { FormulaireAssignmentComponent } from './assignement/component/formulaire-assignment/formulaire-assignment.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -49,7 +53,8 @@ import { FormulaireMatiereComponent } from './assignement/component/formulaire-m
     SidenavComponent,
     ToolbarComponent,
     IsAdminDirective,
-    FormulaireMatiereComponent
+    FormulaireMatiereComponent,
+    FormulaireAssignmentComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +74,8 @@ import { FormulaireMatiereComponent } from './assignement/component/formulaire-m
     MatIconModule,
     MatSidenavModule,
     MatListModule,
-    MatCardModule, HttpClientModule, MatTableModule, MatPaginatorModule
+    MatCardModule, HttpClientModule, MatTableModule, MatPaginatorModule, MatSelectModule, MatStepperModule, ReactiveFormsModule,
+    FlexLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]

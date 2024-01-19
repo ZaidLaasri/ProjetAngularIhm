@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from "../../shared/auth.service";
+import {AuthService} from "../../shared/services/auth.service";
 import {Router} from "@angular/router";
-import {DataService} from "../../shared/data-sharing.service";
+import {DataService} from "../../shared/services/data-sharing.service";
 
 @Component({
   selector: 'app-assignment-logging',

@@ -1,8 +1,8 @@
 import {Component, Output, EventEmitter} from '@angular/core';
 import {Assignment} from "../../shared/models/assignement.model";
-import {AssignmentsService} from "../../shared/assignments.service";
+import {AssignmentsService} from "../../shared/services/assignments.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {AuthService} from "../../shared/auth.service";
+import {AuthService} from "../../shared/services/auth.service";
 
 
 @Component({

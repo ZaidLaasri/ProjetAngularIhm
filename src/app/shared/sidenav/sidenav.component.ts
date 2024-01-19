@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {SidenavService} from "../sidenav.service";
+import {SidenavService} from "../services/sidenav.service";
 import {MatSidenav} from "@angular/material/sidenav";
 import {Subject, takeUntil} from "rxjs";
 

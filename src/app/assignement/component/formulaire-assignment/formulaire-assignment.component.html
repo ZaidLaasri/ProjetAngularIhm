@@ -1,0 +1,18 @@
+<form  *ngIf="formGroup" [formGroup]="formGroup">
+  <mat-form-field class="form-field-full-width">
+    <input matInput placeholder="Nom du devoir" formControlName="nomDevoir" formControlName="nomDevoir" [value]="assignementTransmis?.nom">
+  </mat-form-field>
+
+  <mat-form-field class="form-field-full-width">
+    <input matInput [matDatepicker]="picker" placeholder="Choisir une date" formControlName="dateDevoir" [value]="assignementTransmis?.dateRendu">
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field class="form-field-full-width">
+    <input matInput placeholder="Note du devoir" formControlName="noteDevoir" [value]="assignementTransmis?.note">
+  </mat-form-field>
+
+  <mat-checkbox class="checkbox-margin" formControlName="renduDevoir" [checked]="renduDevoir">Devoir rendu</mat-checkbox>
+
+</form>

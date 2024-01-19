@@ -8,32 +8,22 @@
       <mat-card-content>
         <div class="main-content">
           <h1>Edition de l'assignement {{assignementTransmis?.nom}}</h1>
-          <form
-            ngForm>
+          <form [formGroup]="parentFormGroup">
+            <mat-horizontal-stepper #stepper>
+              <mat-step [stepControl]="parentFormGroup.controls['firstFormGroup']">
+                <app-formulaire-assignment [formGroup]="firstFormGroup"
+                                           [assignementTransmis]="assignementTransmis"></app-formulaire-assignment>
+                <button mat-button matStepperNext>Suivant</button>
+              </mat-step>
+              <mat-step [stepControl]="parentFormGroup.controls['secondFormGroup']">
+                <app-formulaire-matiere [formGroup]="secondFormGroup"
+                                        [assignementTransmis]="assignementTransmis"></app-formulaire-matiere>
+                <button mat-button matStepperNext>Suivant</button>
+                <button mat-button (click)="onSave()">Enregistrer</button>
+              </mat-step>
 
-            <mat-form-field>
-              <input matInput placeholder="nom du devoir" [(ngModel)]="nomDevoir" name="nomDevoir">
-            </mat-form-field>
+            </mat-horizontal-stepper>
 
-            <mat-form-field>
-              <input matInput [matDatepicker]="picker" placeholder="choisir une date" [(ngModel)]="dateDevoir" name="dateDevoir">
-              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-
-            <mat-form-field>
-              <input matInput placeholder="note du devoir" [(ngModel)]="noteDevoir" name="noteDevoir">
-            </mat-form-field>
-
-            <mat-checkbox class="example-margin" [(ngModel)]="renduDevoir" name="renduDevoir">Devoir rendu
-            </mat-checkbox>
-
-
-
-            <button mat-stroked-button color="primary" (click)="onSaveAssignment($event)"
-            >
-              Sauvegarder les changements
-            </button>
           </form>
         </div>
       </mat-card-content>

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {resolve} from "@angular/compiler-cli";
-import {user} from "./users.model";
-import {AssignmentLoggingComponent} from "../assignement/assignment-logging/assignment-logging.component";
+import {user} from "../models/users.model";
+import {AssignmentLoggingComponent} from "../../assignement/assignment-logging/assignment-logging.component";
 import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import {catchError, map, Observable, tap, throwError} from "rxjs";

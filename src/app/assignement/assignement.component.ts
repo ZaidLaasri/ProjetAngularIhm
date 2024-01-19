@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Assignment} from "../shared/models/assignement.model";
-import {AssignmentsService} from "../shared/assignments.service"
-import {user} from "../shared/users.model";
-import {AuthService} from "../shared/auth.service";
+import {AssignmentsService} from "../shared/services/assignments.service"
+import {user} from "../shared/models/users.model";
+import {AuthService} from "../shared/services/auth.service";
 import {Router} from "@angular/router";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";

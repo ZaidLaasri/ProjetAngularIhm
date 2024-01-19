@@ -1,0 +1,15 @@
+.uniform-image {
+  width: 150px; /* Adjust as needed */
+  height: auto;
+}
+.uniform-image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.uniform-image.prof {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}

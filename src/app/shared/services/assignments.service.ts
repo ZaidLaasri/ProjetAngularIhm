@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Assignment} from "./models/assignement.model";
+import {Assignment} from "../models/assignement.model";
 import {catchError, map, Observable, of} from "rxjs";
 import {LoggingService} from "./logging.service";
 import {HttpClient, HttpParams} from "@angular/common/http";

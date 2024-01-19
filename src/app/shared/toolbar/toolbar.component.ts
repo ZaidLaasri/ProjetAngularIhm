@@ -1,9 +1,9 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {AssignmentsService} from "../assignments.service";
+import {AssignmentsService} from "../services/assignments.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {AuthService} from "../auth.service";
-import {SidenavService} from "../sidenav.service";
-import {DataService} from "../data-sharing.service";
+import {AuthService} from "../services/auth.service";
+import {SidenavService} from "../services/sidenav.service";
+import {DataService} from "../services/data-sharing.service";
 import {AssignmentLoggingComponent} from "../../assignement/assignment-logging/assignment-logging.component";
 
 @Component({

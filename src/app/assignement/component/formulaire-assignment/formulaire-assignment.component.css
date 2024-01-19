@@ -1,0 +1,11 @@
+.form-field-full-width {
+  width: 100%;
+  display: block;
+  margin-bottom: 15px;
+}
+
+.checkbox-margin {
+  display: block;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Matiere} from "../../../shared/models/matiere.model";
 import {MatiereService} from "../../../shared/services/matiere.service";
 import {Assignment} from "../../../shared/models/assignement.model";
@@ -12,14 +12,11 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 })
 export class FormulaireMatiereComponent implements OnInit {
   @Input() assignementTransmis?: Assignment;
-  @Input() formGroup?: FormGroup;
-
+  formGroup?: FormGroup;
+  @Output() matiereId = new EventEmitter<string>();
 
   constructor(private _formBuilder: FormBuilder, private matiereService: MatiereService) {
     this.formGroup = this._formBuilder.group({
-      id: ['', Validators.required],
-      nomMatiere:  ['', Validators.required],
-      professeur: ['', Validators.required],
       nomMatiereSelect: ['', Validators.required],
     });
   }
@@ -29,7 +26,9 @@ export class FormulaireMatiereComponent implements OnInit {
     this.updateForm();
     if (this.assignementTransmis?.matiere) {
       this.updateFormWithMatiere(this.assignementTransmis.matiere);
+      this.onMatiereSelected(this.assignementTransmis.matiere._id)
     }
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -42,25 +41,18 @@ export class FormulaireMatiereComponent implements OnInit {
   }
 
   updateForm(): void {
-    this.id=this.assignementTransmis?.matiere?.id
+    this._id=this.assignementTransmis?.matiere?._id
     if (this.formGroup) {
-      this.formGroup.patchValue({
-        id: this.id,
-      });
       this.professeur = this.assignementTransmis?.matiere?.professeur;
       this.nomMatiere = this.assignementTransmis?.matiere?.nom;
       this.photoProfesseur= "assets/prof/"+this.assignementTransmis?.matiere?.photoProfesseur;
       this.image ="assets/matiere/" +this.assignementTransmis?.matiere?.image;
     }
-
   }
 
 
   initFormGroup(): void {
     this.formGroup = this._formBuilder.group({
-      id: 3 ,
-      nomMatiere: ['', Validators.required],
-      professeur: ['', Validators.required],
       nomMatiereSelect: ['', Validators.required],
     });
 
@@ -68,23 +60,18 @@ export class FormulaireMatiereComponent implements OnInit {
       const matiere = this.matieres?.find(m => m.nom === selectedMatiere);
       if (matiere) {
         this.updateFormWithMatiere(matiere);
-        this.formGroup?.patchValue({
-          id: matiere.id // Mettre à jour l'id dans le FormGroup parent
-        });
-
       }
     });
   }
   updateFormWithMatiere(matiere: Matiere): void {
-    this.formGroup?.patchValue({
-      id: matiere.id,
-      nomMatiere: matiere.nom,
-      professeur: matiere.professeur,
-    });
-    this.id=matiere.id;
+    this._id=matiere._id;
     this.professeur=matiere.professeur,
     this.photoProfesseur = "assets/prof/" + matiere.photoProfesseur;
     this.image = "assets/matiere/" + matiere.image;
+    this.onMatiereSelected(this._id)
+  }
+  onMatiereSelected(id: string | undefined) {
+    this.matiereId.emit(id);
   }
   matieres?: Matiere[];
   matiere?: Matiere;
@@ -92,7 +79,7 @@ export class FormulaireMatiereComponent implements OnInit {
   image: any;
   professeur: any;
   photoProfesseur: any;
-  id:any;
+  _id:any;
 
   getMatieres() {
     this.matiereService.getMatieres().subscribe(matieres => {

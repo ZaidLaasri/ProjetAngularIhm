@@ -16,14 +16,13 @@ import {MatInputModule} from "@angular/material/input";
 import {MatDividerModule} from "@angular/material/divider";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatCheckboxModule} from "@angular/material/checkbox";
-import {MatNativeDateModule} from "@angular/material/core";
+import {MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/material/core";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatIconModule} from "@angular/material/icon";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
 import {MatCardModule} from "@angular/material/card";
 import { AssignmentDetailComponent } from './assignement/assignment-detail/assignment-detail.component';
-import { AssignmentListComponent } from './assignement/assignment-list/assignment-list.component';
 import { AssignmentAddComponent } from './assignement/assignment-add/assignment-add.component';
 import { EditAssignmentComponent } from './assignement/edit-assignment/edit-assignment.component';
 import { AssignmentLoggingComponent } from './assignement/assignment-logging/assignment-logging.component';
@@ -38,7 +37,7 @@ import { FormulaireMatiereComponent } from './assignement/component/formulaire-m
 import {MatSelectModule} from "@angular/material/select";
 import {MatStepperModule} from "@angular/material/stepper";
 import { FormulaireAssignmentComponent } from './assignement/component/formulaire-assignment/formulaire-assignment.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormulaireEleveComponent } from './assignement/component/formulaire-eleve/formulaire-eleve.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +45,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     AssignementComponent,
     RenduDirective,
     AssignmentDetailComponent,
-    AssignmentListComponent,
     AssignmentAddComponent,
     EditAssignmentComponent,
     AssignmentLoggingComponent,
@@ -54,7 +52,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     ToolbarComponent,
     IsAdminDirective,
     FormulaireMatiereComponent,
-    FormulaireAssignmentComponent
+    FormulaireAssignmentComponent,
+    FormulaireEleveComponent
   ],
   imports: [
     BrowserModule,
@@ -75,9 +74,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatSidenavModule,
     MatListModule,
     MatCardModule, HttpClientModule, MatTableModule, MatPaginatorModule, MatSelectModule, MatStepperModule, ReactiveFormsModule,
-    FlexLayoutModule
   ],
-  providers: [],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'fr' },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

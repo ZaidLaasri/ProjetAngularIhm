@@ -14,47 +14,60 @@ export class FormulaireAssignmentComponent implements OnInit {
   renduDevoir: any;
 
   constructor(private _formBuilder: FormBuilder) {
+    // Initialisation du FormGroup avec renduDevoir désactivé par défaut
     this.formGroup = this._formBuilder.group({
-      // initialiser avec des contrôles vides ou des valeurs par défaut
       nomDevoir: ['', Validators.required],
       dateDevoir: ['', Validators.required],
-      noteDevoir: ['', Validators.required],
-      renduDevoir: [false]
+      noteDevoir: [''],
+      renduDevoir: [{ value: false, disabled: true }]
     });
   }
 
   ngOnInit(): void {
-    if (this.assignementTransmis) {
-      if (this.formGroup)
-        this.formGroup.patchValue({
-          nomDevoir: this.assignementTransmis.nom,
-          dateDevoir: this.assignementTransmis.dateRendu,
-          noteDevoir: this.assignementTransmis.note,
-          renduDevoir: this.assignementTransmis.rendu
-        });
-    }
-    this.renduDevoir = this.assignementTransmis?.rendu;
+    this.setupNoteDevoirSubscription();
+    this.updateFormWithAssignment();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['assignementTransmis'] && this.assignementTransmis) {
-      this.updateForm();
+    if (changes['assignementTransmis']) {
+      this.updateFormWithAssignment();
     }
   }
-  updateForm(): void {
-    if (this.formGroup) {
-      this.formGroup.patchValue({
-        nomDevoir: this.assignementTransmis?.nom,
-        dateDevoir: this.assignementTransmis?.dateRendu,
-        noteDevoir: this.assignementTransmis?.note,
-        renduDevoir: this.assignementTransmis?.rendu
+
+  private setupNoteDevoirSubscription(): void {
+    this.formGroup?.get('noteDevoir')?.valueChanges.subscribe(value => {
+      if (value) {
+        this.formGroup?.get('renduDevoir')?.enable();
+      } else {
+        this.formGroup?.get('renduDevoir')?.disable();
+      }
+    });
+  }
+
+  private updateFormWithAssignment(): void {
+    if (this.assignementTransmis) {
+      // Mise à jour du formulaire avec les données de assignementTransmis
+      this.formGroup?.patchValue({
+        nomDevoir: this.assignementTransmis.nom,
+        dateDevoir: this.assignementTransmis.dateRendu,
+        noteDevoir: this.assignementTransmis.note,
+        renduDevoir: this.assignementTransmis.rendu
       });
-      this.renduDevoir = this.assignementTransmis?.rendu;
+
+      // Activer ou désactiver renduDevoir en fonction de la note
+      if (this.assignementTransmis.note) {
+        this.formGroup?.get('renduDevoir')?.enable();
+      } else {
+        this.formGroup?.get('renduDevoir')?.disable();
+      }
+    } else {
+      // Réinitialiser le formulaire pour un nouvel Assignment
+      this.formGroup?.reset({
+        nomDevoir: '',
+        dateDevoir: '',
+        noteDevoir: '',
+        renduDevoir: { value: false, disabled: true }
+      });
     }
   }
-  updateFormgroup() {
-
-  }
-
-
 }

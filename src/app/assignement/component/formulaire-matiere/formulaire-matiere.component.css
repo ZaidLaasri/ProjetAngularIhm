@@ -13,3 +13,22 @@
   height: auto;
   display: block;
 }
+
+/* Styles pour la mise en page en deux colonnes */
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.column {
+  flex: 1;
+  padding: 10px; /* Ajustez la marge selon vos besoins */
+}
+
+.full-width {
+  width: 100%;
+}
+
+
+

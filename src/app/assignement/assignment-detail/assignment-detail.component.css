@@ -1,5 +1,4 @@
 .sidenav-container {
-  margin-top: -20px;
   height: 100%;
 }
 
@@ -44,9 +43,9 @@ main {
 
 }
 .uniform-image {
-  width: 150px; /* Adjust as needed */
+  width: 150px;
   height: auto;
 }
 .edit-button {
-  margin-right: 10px; /* Adjust the space as needed */
+  margin-right: 10px;
 }

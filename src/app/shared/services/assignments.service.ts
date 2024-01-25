@@ -11,8 +11,11 @@ export class AssignmentsService {
 
   url = "http://localhost:8010/api/assignments";
 
+  getAssignments(): Observable<Assignment[]> {
+    return this.http.get<Assignment[]>(this.url);
+  }
 
-  getAssignments(start: number = 0, limit: number = 20, rendu: boolean = false, search: string = ''): Observable<Assignment[]> {
+  getAssignments2(start: number = 0, limit: number = 20, rendu: boolean = false, search: string = ''): Observable<Assignment[]> {
     let params = new HttpParams()
         .set('start', start.toString())
         .set('limit', limit.toString())

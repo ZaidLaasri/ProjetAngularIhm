@@ -16,27 +16,22 @@
                 <button mat-button matStepperNext>Suivant</button>
               </mat-step>
               <mat-step [stepControl]="parentFormGroup.controls['secondFormGroup']">
-                <app-formulaire-matiere [formGroup]="secondFormGroup"
+                <app-formulaire-matiere (matiereId)="onMatiereIdReceived($event)"
                                         [assignementTransmis]="assignementTransmis"></app-formulaire-matiere>
                 <button mat-button matStepperNext>Suivant</button>
-                <button mat-button (click)="onSave()">Enregistrer</button>
               </mat-step>
 
+              <mat-step [stepControl]="parentFormGroup.controls['thirdFormGroup']">
+                <app-formulaire-eleve (eleveId)="onEleveIdReceived($event)"
+                                      [assignementTransmis]="assignementTransmis"></app-formulaire-eleve>
+                <button mat-button matStepperPrevious.>Précédant</button>
+                <button mat-button (click)="onSave()">Enregistrer</button>
+              </mat-step>
             </mat-horizontal-stepper>
-
           </form>
         </div>
       </mat-card-content>
     </mat-card>
   </mat-sidenav-content>
 </mat-sidenav-container>
-
-
-
-
-
-
-
-
-
 

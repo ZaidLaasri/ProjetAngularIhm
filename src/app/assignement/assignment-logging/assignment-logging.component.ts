@@ -25,12 +25,6 @@ export class AssignmentLoggingComponent implements OnInit {
 
   admin: any;
 
-  onLogin(): void {
-    this.updateIdentifiant();
-    this.authService.logIn(this.identifiant, this.password);
-    this.authService.isAdmin(this.identifiant, this.password);
-    this.router.navigate(['/home']);
-  }
 
   login() {
     this.authService.login(this.identifiant, this.password).subscribe(

@@ -1,60 +1,76 @@
-  <mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container class="sidenav-container">
     <mat-sidenav #sidenav class="sidenav" mode="side" [opened]="sidenavOpended">
-      <app-sidenav></app-sidenav>
+        <app-sidenav></app-sidenav>
     </mat-sidenav>
     <mat-sidenav-content>
-      <app-toolbar (toggleSidenav)="onToggleSidenav()"></app-toolbar>
-      <mat-card>
-        <mat-card-content>
-          <div class="main-content">
-            <mat-checkbox (change)="applyFilter($event)">Afficher uniquement les devoirs rendus</mat-checkbox>
-            <input matInput (keyup)="applySearch($event)" placeholder="Recherche par nom">
-
-            <mat-table *ngIf="dataSource"
-              [dataSource]="dataSource">
-              <!-- Définissez des colonnes ici, par exemple: -->
-              <ng-container matColumnDef="nom">
-                <mat-header-cell *matHeaderCellDef> Nom </mat-header-cell>
-                <mat-cell *matCellDef="let element"> <a routerLink="/assignement/{{element.id}}">{{element.nom}} </a></mat-cell>
-              </ng-container>
-              <ng-container matColumnDef="dateRendu">
-                <mat-header-cell *matHeaderCellDef> Date de rendu </mat-header-cell>
-                <mat-cell *matCellDef="let element"> <a routerLink="/assignement/{{element.id}}">{{element.dateRendu | date: 'dd/MM/yyyy'}}</a> </mat-cell>
-              </ng-container>
-              <ng-container matColumnDef="rendu">
-                <mat-header-cell *matHeaderCellDef> Rendu </mat-header-cell>
-                <mat-cell *matCellDef="let element"> <a routerLink="/assignement/{{element.id}}"> </a> <mat-icon *ngIf="element.rendu">check</mat-icon>
-                  <mat-icon *ngIf="!element.rendu">close</mat-icon>
-                </mat-cell>
-              </ng-container>
-              <ng-container matColumnDef="note">
-                <mat-header-cell *matHeaderCellDef> Note </mat-header-cell>
-                <mat-cell *matCellDef="let element" ><ng-container *ngIf="element.rendu" ><a routerLink="/assignement/{{element.id}}"> {{element.note}}</a> </ng-container></mat-cell>
-              </ng-container>
-              <ng-container matColumnDef="matiere">
-                <mat-header-cell *matHeaderCellDef> Matière </mat-header-cell>
-                <mat-cell *matCellDef="let element"> <a routerLink="/assignement/{{element.id}}">{{element.matiere.nom}}</a> </mat-cell>
-              </ng-container>
-              <ng-container matColumnDef="eleve">
-                <mat-header-cell *matHeaderCellDef> Elève </mat-header-cell>
-                <mat-cell *matCellDef="let element"><a routerLink="/assignement/{{element.id}}"> {{element.eleve.nom}}</a> </mat-cell>
-              </ng-container>
-
-              <!-- Autres colonnes... -->
-
-              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-              <mat-row *matRowDef="let row; columns: displayedColumns;" [appRendu]="row.rendu"></mat-row>
-            </mat-table>
-
-            <mat-paginator [pageSizeOptions]="[5, 10, 20]" (page)="onPaginateChange($event)"></mat-paginator>
-
-          </div>
-        </mat-card-content>
-      </mat-card>
-
+        <app-toolbar (toggleSidenav)="onToggleSidenav()"></app-toolbar>
+        <mat-card>
+            <mat-card-content>
+                <div class="main-content">
+                    <div class="filters-container">
+                        <mat-checkbox (change)="applyFilter($event)">
+                            Afficher uniquement les devoirs rendus
+                        </mat-checkbox>
+                        <input matInput (keyup)="applySearche($event)" placeholder="Recherche par nom" class="search-input">
+                    </div>
+                    <div class="mat-table-container">
+                        <mat-table *ngIf="dataSource"
+                                   [dataSource]="dataSource">
+                            <ng-container matColumnDef="photoProf">
+                                <mat-header-cell *matHeaderCellDef> Professeur</mat-header-cell>
+                                <mat-cell *matCellDef="let element">
+                                    <a routerLink="/assignement/{{element.id}}">
+                                        <img [src]="'assets/prof/' + element.matiere.photoProfesseur" class="profile-pic">
+                                    </a>
+                                </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="nom">
+                                <mat-header-cell *matHeaderCellDef> Nom</mat-header-cell>
+                                <mat-cell *matCellDef="let element"><a
+                                        routerLink="/assignement/{{element.id}}">{{element.nom}} </a></mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="dateRendu">
+                                <mat-header-cell *matHeaderCellDef> Date de rendu</mat-header-cell>
+                                <mat-cell *matCellDef="let element"><a
+                                        routerLink="/assignement/{{element.id}}">{{element.dateRendu | date: 'dd/MM/yyyy'}}</a>
+                                </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="rendu">
+                                <mat-header-cell *matHeaderCellDef> Rendu</mat-header-cell>
+                                <mat-cell *matCellDef="let element"><a routerLink="/assignement/{{element.id}}"> </a>
+                                    <mat-icon *ngIf="element.rendu">check</mat-icon>
+                                    <mat-icon *ngIf="!element.rendu">close</mat-icon>
+                                </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="note">
+                                <mat-header-cell *matHeaderCellDef> Note</mat-header-cell>
+                                <mat-cell *matCellDef="let element">
+                                    <ng-container *ngIf="element.rendu"><a
+                                            routerLink="/assignement/{{element.id}}"> {{element.note}}</a>
+                                    </ng-container>
+                                </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="matiere">
+                                <mat-header-cell *matHeaderCellDef> Matière</mat-header-cell>
+                                <mat-cell *matCellDef="let element"><a
+                                        routerLink="/assignement/{{element.id}}">{{element.matiere.nom}}</a></mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="eleve">
+                                <mat-header-cell *matHeaderCellDef> Elève</mat-header-cell>
+                                <mat-cell *matCellDef="let element"><a
+                                        routerLink="/assignement/{{element.id}}"> {{element.eleve.nom}}</a></mat-cell>
+                            </ng-container>
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns;" [appRendu]="row.rendu"></mat-row>
+                        </mat-table>
+                    </div>
+                    <mat-paginator [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+                </div>
+            </mat-card-content>
+        </mat-card>
 
     </mat-sidenav-content>
-  </mat-sidenav-container>
+</mat-sidenav-container>
 <!--
 <app-assignment-add *ngIf="formVisible" (newAssignement)="onNewAssignement($event)"></app-assignment-add>
 -->

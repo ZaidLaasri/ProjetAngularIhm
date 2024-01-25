@@ -1,51 +1,41 @@
-  <mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container class="sidenav-container">
     <mat-sidenav #sidenav class="sidenav" mode="side" [opened]="sidenavOpended">
-      <app-sidenav></app-sidenav>
+        <app-sidenav></app-sidenav>
     </mat-sidenav>
     <mat-sidenav-content>
-      <app-toolbar (toggleSidenav)="onToggleSidenav()"></app-toolbar>
-      <mat-card>
-        <mat-card-content>
-          <div class="main-content">
-            <form #formAssignement="ngForm">
-
-              <mat-form-field>
-                <input matInput placeholder="nom du devoir" #nomAssignement [(ngModel)]="nomDevoir"
-                       name="nomDevoir">
-              </mat-form-field>
-
-              <mat-form-field>
-
-                <input matInput [matDatepicker]="picker" placeholder="choisir une date"
-                       [(ngModel)]="dateDevoir"
-                       name="dateevoir">
-                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-              </mat-form-field>
-
-              <mat-form-field>
-
-                <input matInput placeholder="note du devoir" [(ngModel)]="noteDevoir"
-                       name="noteDevoir">
-              </mat-form-field>
-
-
-              <mat-checkbox class="example-margin" [(ngModel)]="renduDevoir" name="renduDevoir">Devoir
-                rendu
-              </mat-checkbox>
-
-
-              <button mat-stroked-button
-                      [ngStyle]="{color:colorActive}"
-                      (click)="onSubmit($event)">
-                Ajouter un devoir !
-              </button>
-            </form>
-          </div>
-        </mat-card-content>
-      </mat-card>
+        <app-toolbar (toggleSidenav)="onToggleSidenav()"></app-toolbar>
+        <mat-card>
+            <mat-card-content>
+                <div class="main-content">
+                    <form #formAssignement="ngForm" [formGroup]="parentFormGroup">
+                        <mat-horizontal-stepper #stepper>
+                            <mat-step [stepControl]="parentFormGroup.controls['firstFormGroup']">
+                                <app-formulaire-assignment [formGroup]="firstFormGroup"
+                                ></app-formulaire-assignment>
+                                <button mat-button matStepperNext>Suivant</button>
+                            </mat-step>
+                            <mat-step [stepControl]="parentFormGroup.controls['secondFormGroup']">
+                                <app-formulaire-matiere (matiereId)="onMatiereIdReceived($event)"
+                                ></app-formulaire-matiere>
+                                <button mat-button matStepperNext>Suivant</button>
+                            </mat-step>
+                            <mat-step [stepControl]="parentFormGroup.controls['thirdFormGroup']">
+                                <app-formulaire-eleve (eleveId)="onEleveIdReceived($event)"
+                                ></app-formulaire-eleve>
+                                <div class="buttons-container">
+                                    <button mat-button matStepperPrevious>Précédant</button>
+                                    <button mat-stroked-button color="primary" (click)="onSubmit($event)">
+                                        Ajouter le devoir !
+                                    </button>
+                                </div>
+                            </mat-step>
+                        </mat-horizontal-stepper>
+                    </form>
+                </div>
+            </mat-card-content>
+        </mat-card>
     </mat-sidenav-content>
-  </mat-sidenav-container>
+</mat-sidenav-container>
 
 
 

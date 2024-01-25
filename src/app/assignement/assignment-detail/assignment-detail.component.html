@@ -23,7 +23,7 @@
                     <img class="uniform-image" *ngIf="assignementTransmis?.matiere?.image" [src]="image" alt="Image de la matière" />
                     <p>Étudiant: {{ assignementTransmis?.eleve?.nom }}</p>
 
-                    <button mat-stroked-button color="primary" class="edit-button" (click)="onClickEdit()" [disabled]="!isAdmin()">Éditer</button>
+                    <button mat-stroked-button color="primary" class="edit-button" (click)="onClickEdit()">Éditer</button>
                     <button mat-raised-button color="warn" class="delete-button" [disabled]="!isAdmin()" (click)="onDeleteAssignment()">Supprimer le devoir</button>
                   </div>
 

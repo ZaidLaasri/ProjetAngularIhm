@@ -1,7 +1,0 @@
-<div *ngFor="let a of assignements" [ngClass]="{'rendu':a.rendu, 'nonRendu':!a.rendu}">
-
-
-  <ng-template #nonRendu>
-    <p>Le devoir {{a.nom}} n'est pas rendu avec une note de {{a.note}}</p>
-  </ng-template>
-</div>

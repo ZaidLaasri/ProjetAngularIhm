@@ -1,0 +1,22 @@
+<form *ngIf="formGroup" [formGroup]="formGroup">
+  <h2>Sera assignée pour :</h2>
+  <div class="row">
+    <mat-form-field class="full-width">
+      <mat-label>Nom l'élévé</mat-label>
+      <mat-select formControlName="nomEleveSelect">
+        <mat-option *ngFor="let eleve of eleves" [value]="eleve.nom">
+          {{ eleve.nom }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="row">
+    <div class="column">
+      <p>Nom d'étudiant : {{nomEtudiant}}</p>
+    </div>
+    <div class="column">
+      <p>Numéro étudiant : {{numeroEtudiant}}</p>
+    </div>
+  </div>
+</form>
+

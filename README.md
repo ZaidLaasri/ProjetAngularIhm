@@ -45,3 +45,12 @@ Suivez ces étapes pour installer et exécuter l'application localement sur votr
 - Clonez le backend depuis https://github.com/ZaidLaasri/ProjetBack.git.
 - Lancez le backend en suivant les instructions fournies dans sa documentation.
 - Modifiez les URLs de services dans le code Angular pour pointer vers le backend local.
+
+## liste des utilisateurs pour le test
+1. admins 
+nom d'utilisateur : ZaidLaasri
+mot de passe : test1234
+
+2. non admin
+   nom d'utilisateur : MichelBuffa
+   mot de passe : 0000

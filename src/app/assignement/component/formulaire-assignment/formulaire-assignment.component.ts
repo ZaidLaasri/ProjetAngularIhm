@@ -14,7 +14,6 @@ export class FormulaireAssignmentComponent implements OnInit {
   renduDevoir: any;
 
   constructor(private _formBuilder: FormBuilder) {
-    // Initialisation du FormGroup avec renduDevoir désactivé par défaut
     this.formGroup = this._formBuilder.group({
       nomDevoir: ['', Validators.required],
       dateDevoir: ['', Validators.required],
@@ -46,7 +45,6 @@ export class FormulaireAssignmentComponent implements OnInit {
 
   private updateFormWithAssignment(): void {
     if (this.assignementTransmis) {
-      // Mise à jour du formulaire avec les données de assignementTransmis
       this.formGroup?.patchValue({
         nomDevoir: this.assignementTransmis.nom,
         dateDevoir: this.assignementTransmis.dateRendu,
@@ -54,14 +52,12 @@ export class FormulaireAssignmentComponent implements OnInit {
         renduDevoir: this.assignementTransmis.rendu
       });
 
-      // Activer ou désactiver renduDevoir en fonction de la note
       if (this.assignementTransmis.note) {
         this.formGroup?.get('renduDevoir')?.enable();
       } else {
         this.formGroup?.get('renduDevoir')?.disable();
       }
     } else {
-      // Réinitialiser le formulaire pour un nouvel Assignment
       this.formGroup?.reset({
         nomDevoir: '',
         dateDevoir: '',

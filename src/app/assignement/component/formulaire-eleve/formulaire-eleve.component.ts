@@ -12,66 +12,54 @@ import {Eleve} from "../../../shared/models/eleve.model";
 })
 export class FormulaireEleveComponent implements OnInit {
   @Input() assignementTransmis?: Assignment;
-  @Input() formGroup?: FormGroup;
   @Output() eleveId = new EventEmitter<string>();
-  onEleveSelected(id: string | undefined) {
-    this.eleveId.emit(id);
-  }
 
-  eleves?:Eleve[];
+  formGroup?: FormGroup;
+  eleves?: Eleve[];
+  matiere?: Matiere;
+  id: any;
+  nomEtudiant: string | undefined;
+  numeroEtudiant: any;
 
-  constructor(private _formBuilder: FormBuilder, private eleveService: EleveService) {
-    this.formGroup = this._formBuilder.group({
-      nomEleveSelect: ['', Validators.required],
-    });
-  }
-  ngOnInit(): void {
-    this.getEleves();
+  constructor(private formBuilder: FormBuilder, private eleveService: EleveService) {
     this.initFormGroup();
-    if (this.assignementTransmis?.eleve) {
-      this.updateFormWithEleve(this.assignementTransmis.eleve);
-      this.onEleveSelected(this.assignementTransmis.eleve._id);
-    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['assignementTransmis'] && this.assignementTransmis) {
-      this.formGroup?.patchValue({
-        nomEleveSelect: this.assignementTransmis.eleve?.nom,
-      });
-      this.nomEtudiant=this.assignementTransmis.eleve?.nom;
-      this.numeroEtudiant=this.assignementTransmis.eleve?.numero;
+      this.formGroup?.patchValue({ nomEleveSelect: this.assignementTransmis.eleve?.nom });
+      this.nomEtudiant = this.assignementTransmis.eleve?.nom;
+      this.numeroEtudiant = this.assignementTransmis.eleve?.numero;
     }
   }
 
+  ngOnInit(): void {
+    this.getEleves();
+    if (this.assignementTransmis?.eleve) {
+      this.updateFormWithEleve(this.assignementTransmis.eleve);
+    }
+  }
 
-  initFormGroup(): void {
-    this.formGroup = this._formBuilder.group({
-      nomEleveSelect: ['', Validators.required],
-    });
+  private initFormGroup(): void {
+    this.formGroup = this.formBuilder.group({ nomEleveSelect: ['', Validators.required] });
 
     this.formGroup.get('nomEleveSelect')?.valueChanges.subscribe(selectedEleve => {
       const eleve = this.eleves?.find(e => e.nom === selectedEleve);
-      if (eleve) {
-        this.updateFormWithEleve(eleve);
-      }
+      if (eleve) this.updateFormWithEleve(eleve);
     });
   }
-  updateFormWithEleve(eleve: Eleve): void {
-    this.nomEtudiant=eleve.nom;
-    this.numeroEtudiant=eleve.numero;
+
+  private updateFormWithEleve(eleve: Eleve): void {
+    this.nomEtudiant = eleve.nom;
+    this.numeroEtudiant = eleve.numero;
     this.onEleveSelected(eleve._id);
   }
 
-  matiere?: Matiere;
-  id:any;
-  nomEtudiant:any;
-  numeroEtudiant:any;
-
-  getEleves() {
-    this.eleveService.getEleves().subscribe(eleves => {
-      this.eleves = eleves;
-    });
+  private getEleves(): void {
+    this.eleveService.getEleves().subscribe(eleves => this.eleves = eleves);
   }
 
+  onEleveSelected(id: string | undefined): void {
+    this.eleveId.emit(id);
+  }
 }

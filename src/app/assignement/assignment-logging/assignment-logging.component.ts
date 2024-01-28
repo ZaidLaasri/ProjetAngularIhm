@@ -24,16 +24,12 @@ export class AssignmentLoggingComponent implements OnInit {
   }
 
   admin: any;
-
-
   login() {
     this.authService.login(this.identifiant, this.password).subscribe(
       connection => {
         console.log(connection);
-
         // Stocker l'état de la session dans le LocalStorage ou SessionStorage
         localStorage.setItem('userSession', JSON.stringify(connection));
-
         this.router.navigate(['/home']);
       },
       error => {

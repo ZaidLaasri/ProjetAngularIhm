@@ -13,11 +13,7 @@ import {catchError, map, Observable, tap, throwError} from "rxjs";
 export class AuthService {
   url = "http://localhost:8010/api/users";
 
-  user: user = {
-    login: 'Zaid',
-    password: '0000',
-    admin: true
-  }
+
 
   logIn(login: string, password: string): boolean {
     this.loggedIn = true;
@@ -29,10 +25,12 @@ export class AuthService {
   login(nomUtilisateur: string, password: string): Observable<any> {
     return this.http.post<any>(this.url, { nomUtilisateur, password }).pipe(
       tap(response => {
+        // Mettre à jour la variable admin avec la réponse
         this.loggedIn = true;
         this.Admin = response.admin;
       }),
       catchError(error => {
+        // Gérer l'erreur
         return throwError(error);
       })
     );

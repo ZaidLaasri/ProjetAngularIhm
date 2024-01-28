@@ -11,8 +11,9 @@ import {catchError, map, Observable, tap, throwError} from "rxjs";
 })
 
 export class AuthService {
-  url = "http://localhost:8010/api/users";
+ // url = "http://localhost:8010/api/users";
 
+  url="https://assignmentservice.onrender.com/api/users"
 
 
   logIn(login: string, password: string): boolean {

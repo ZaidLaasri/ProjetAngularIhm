@@ -11,7 +11,9 @@ import {Eleve} from "../models/eleve.model";
 export class EleveService {
   constructor(private loggingService: LoggingService, private http: HttpClient) {
   }
-  url = "http://localhost:8010/api/eleve";
+//  url = "http://localhost:8010/api/eleve";
+
+url = "https://assignmentservice.onrender.com/api/eleve"
 
   getEleves(): Observable<Eleve[]> {
     return this.http.get<Eleve[]>(this.url);

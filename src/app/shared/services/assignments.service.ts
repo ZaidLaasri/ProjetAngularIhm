@@ -9,7 +9,8 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 })
 export class AssignmentsService {
 
-  url = "http://localhost:8010/api/assignments";
+ // url = "http://localhost:8010/api/assignments";
+  url = "https://assignmentservice.onrender.com/api/assignments"
 
   getAssignments(): Observable<Assignment[]> {
     return this.http.get<Assignment[]>(this.url);
